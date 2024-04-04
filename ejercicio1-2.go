@@ -8,7 +8,9 @@ import (
 
 func main() {
 	var frase, word1, word2 string
-	println("Ingrese un frase: ")
+
+	//SACAR LO COMENTADO PARA QUE SEA INTERACTIVO
+	/*println("Ingrese un frase: ")
 
 	fmt.Scan(&frase)
 
@@ -16,8 +18,13 @@ func main() {
 	fmt.Scan(&word1)
 
 	fmt.Println("Ingrese la palabra por la que quiere reemplazar que tengan la misma cantidad de letras")
-	fmt.Scan(&word2)
+	fmt.Scan(&word2)*/
 
+
+	//Ejemplos
+	word1 = "helado"
+	word2 = "pizza"
+	frase = "Me gusta el helado con aceituna"
 	frase2 := replace(frase, word1, word2)
 
 	fmt.Println("La frase nueva es: " + frase2)
@@ -30,7 +37,7 @@ func replace(frase, word1, word2 string) string {
 	var palabra string
 	var index = 0
 	fraseNueva := ""
-
+	word1 = strings.ToLower(word1)
 	for i := 0; i < len(frase2); {
 
 		index = strings.Index(frase2[i:], word1)
@@ -41,7 +48,7 @@ func replace(frase, word1, word2 string) string {
 			if palabra == word1 {
 				var palabraReplace string
 
-				for j, letra := range frase[index : index+len(word1)] {
+				for j, letra := range frase[index : index+len(word1)-1] {
 					palabraReplace += replaceWord(j, rune(letra), word2)
 				}
 
@@ -54,7 +61,7 @@ func replace(frase, word1, word2 string) string {
 			i = len(frase2)
 		}
 	}
-
+	fraseNueva = strings.TrimSpace(fraseNueva)
 	return fraseNueva
 }
 
