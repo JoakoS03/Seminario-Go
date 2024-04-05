@@ -20,7 +20,6 @@ func main() {
 	fmt.Println("Ingrese la palabra por la que quiere reemplazar que tengan la misma cantidad de letras")
 	fmt.Scan(&word2)*/
 
-
 	//Ejemplos
 	word1 = "helado"
 	word2 = "pizza"
@@ -43,18 +42,17 @@ func replace(frase, word1, word2 string) string {
 		index = strings.Index(frase2[i:], word1)
 		if index != -1 {
 
-			palabra = frase2[index : index+len(word1)]
+			palabra = frase2[i+index : i+index+len(word1)]
 
 			if palabra == word1 {
 				var palabraReplace string
 
-				for j, letra := range frase[index : index+len(word1)-1] {
+				for j, letra := range frase[i+index : i+index+len(word1)-1] {
 					palabraReplace += replaceWord(j, rune(letra), word2)
 				}
 
-				fraseNueva += frase[i:index]
-				fraseNueva += palabraReplace
-				i = index + len(word1)
+				fraseNueva += frase[i:i+index] + palabraReplace
+				i = i + index + len(word1)
 			}
 		} else {
 			fraseNueva += frase[i:]
