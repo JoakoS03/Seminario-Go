@@ -43,12 +43,12 @@ func replace(frase string, lenght int) string {
 		index = strings.Index(frase2[i:], wordRepacle)
 		if index != -1 {
 
-			palabra = frase2[index : index+lenght]
+			palabra = frase2[i+index : i+index+lenght]
 			fmt.Println(palabra, wordRepacle)
 			if palabra == wordRepacle {
 				var palabraReplace string
 
-				for j, letra := range frase[index : index+lenght] {
+				for j, letra := range frase[i+index : i+index+lenght] {
 					if lenght == 7 {
 						palabraReplace += replaceJueves(j, rune(letra))
 					} else {
@@ -56,9 +56,9 @@ func replace(frase string, lenght int) string {
 					}
 				}
 
-				fraseNueva += frase[i:index]
+				fraseNueva += frase[i : i+index]
 				fraseNueva += palabraReplace
-				i = index + lenght
+				i = i + index + lenght
 			}
 		} else {
 			fraseNueva += frase[i:]
