@@ -9,7 +9,6 @@ import (
 func main() {
 	var frase, word1, word2 string
 
-	//SACAR LO COMENTADO PARA QUE SEA INTERACTIVO
 	/*println("Ingrese un frase: ")
 
 	fmt.Scan(&frase)
