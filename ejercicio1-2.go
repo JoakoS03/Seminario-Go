@@ -20,10 +20,15 @@ func main() {
 	fmt.Println("Ingrese la palabra por la que quiere reemplazar que tengan la misma cantidad de letras")
 	fmt.Scan(&word2)*/
 
-	//Ejemplos
-	word1 = "helado"
-	word2 = "pizza"
-	frase = "Me gusta el helado con aceituna"
+	//Ejercicio 1
+	/*word1 = "jueves"
+	word2 = "martes"
+	frase = "Los JUEVes juego al tenis pero los JueveS no"*/
+
+	//Ejercicio 2
+	word1 = "MIERCOLES"
+	word2 = "AUTOMOVIL"
+	frase = "Ando en un miercoles muy bueno pero el MIERCOles"
 	frase2 := replace(frase, word1, word2)
 
 	fmt.Println("La frase nueva es: " + frase2)
@@ -36,6 +41,7 @@ func replace(frase, word1, word2 string) string {
 	var palabra string
 	var index = 0
 	fraseNueva := ""
+	word2 = strings.ToLower(word2)
 	word1 = strings.ToLower(word1)
 	for i := 0; i < len(frase2); {
 
@@ -47,7 +53,7 @@ func replace(frase, word1, word2 string) string {
 			if palabra == word1 {
 				var palabraReplace string
 
-				for j, letra := range frase[i+index : i+index+len(word1)-1] {
+				for j, letra := range frase[i+index : i+index+len(word1)] {
 					palabraReplace += replaceWord(j, rune(letra), word2)
 				}
 
@@ -59,6 +65,7 @@ func replace(frase, word1, word2 string) string {
 			i = len(frase2)
 		}
 	}
+	//La funcion TrimSpace saca los espacios de mas en un stirng
 	fraseNueva = strings.TrimSpace(fraseNueva)
 	return fraseNueva
 }
