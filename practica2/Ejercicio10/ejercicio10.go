@@ -1,10 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"bytes"
+	"fmt"
+)
 
 type Stack []int
 
-//Crea una pila vacia
+// Crea una pila vacia
 func (s Stack) New() Stack {
 	return Stack{}
 }
@@ -27,17 +30,18 @@ func (s Stack) Len(pila Stack) int {
 	return len
 }
 
-func (s Stack) ToStirng(pila Stack) string {
-	str := ""
+func (s Stack) ToString(pila Stack) string {
+	var buffer bytes.Buffer
 	if pila.isEmpty(pila) {
-		return "La pila esta vacia"
+		return "La pila está vacía"
 	} else {
-		for elem := range pila {
-			str += string(elem)
+		for _, elem := range pila {
+			buffer.WriteString(fmt.Sprintf("%v ", elem))
 		}
 	}
-	return str
+	return buffer.String()
 }
+
 func (s Stack) FrontElement(pila Stack) int {
 	if pila.isEmpty(pila) {
 		//Quiere decir que la pila esta vacia
@@ -56,10 +60,9 @@ func (s Stack) Pop(pila Stack) int {
 	return pila[len(pila)-1]
 }
 
-func (s Stack) Iterate(pila Stack, f func(int) int) {
+func (s Stack) Iterate(pila Stack) {
 	for elem := range pila {
 		fmt.Println(elem)
-		f(elem)
 	}
 }
 
@@ -68,7 +71,15 @@ func main() {
 	fmt.Println(pila.New())
 	fmt.Println(pila.isEmpty(pila))
 	fmt.Println(pila.Len(pila))
-	fmt.Println(pila.ToStirng(pila))
+	fmt.Println(pila.ToString(pila))
 	fmt.Println(pila.FrontElement(pila))
-	fmt.Println(pila.Iterate(pila, Sumar))
+	pila.Iterate(pila)
+
+	fmt.Println("---------------------------")
+
+	pila.Push(&pila, 12)
+	fmt.Println(pila.Len(pila))
+	fmt.Println(pila.isEmpty(pila))
+	fmt.Println(pila.ToString(pila))
+	fmt.Println(pila.FrontElement(pila))
 }
