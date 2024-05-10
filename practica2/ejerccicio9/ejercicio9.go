@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Nodo struct {
 	sig  *Nodo
 	dato int
@@ -10,6 +12,13 @@ type List struct {
 }
 
 func (l List) New() List {
+	return List{}
+}
+
+func (l List) Next(self List) List {
+	if self.head != nil {
+		return self
+	}
 	return List{}
 }
 
@@ -29,13 +38,17 @@ func (l List) PushFront(self *List, item int) {
 }
 
 func (l List) PushBack(self List, item int) {
-	var aux Nodo
-	ult := self.head
-	aux.dato = item
-	for ult.sig != nil {
-		ult = ult.sig
+	if self.IsEmpty(self) {
+		self.PushFront(&self, item)
+	} else {
+		var aux Nodo
+		ult := self.head
+		aux.dato = item
+		for ult.sig != nil {
+			ult = ult.sig
+		}
+		ult.sig = &aux
 	}
-	ult.sig = &aux
 }
 
 func (l List) Len(lista List) int {
@@ -60,5 +73,24 @@ func (l List) FrontElement(lista List) int {
 	if lista.head.sig != nil {
 		return lista.head.dato
 	}
+	fmt.Println("Si ve este mensaje es que la lista esta vacia")
 	return -1
+}
+
+func (l List) Remove(self List) int {
+	return -1 //Preguntar
+}
+func SumarValores(num int) int {
+	return num + num
+}
+func (l List) Iterate(self List, f func(int)) int {
+	suma := 0
+	for self.head.sig != nil {
+		suma += f(self.head.dato)
+		self.head = self.head.sig
+	}
+	return suma
+}
+func main() {
+
 }
