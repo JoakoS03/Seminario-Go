@@ -83,14 +83,16 @@ func (l List) Remove(self List) int {
 func SumarValores(num int) int {
 	return num + num
 }
-func (l List) Iterate(self List, f func(int)) int {
+func (l List) Iterate(self List, f func(int) int) {
 	suma := 0
 	for self.head.sig != nil {
 		suma += f(self.head.dato)
 		self.head = self.head.sig
 	}
-	return suma
 }
 func main() {
-
+	var lista List
+	lista = lista.New()
+	lista.Iterate(lista, SumarValores)
+	fmt.Println(lista.IsEmpty(lista))
 }
