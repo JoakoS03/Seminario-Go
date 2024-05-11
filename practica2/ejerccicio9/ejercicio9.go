@@ -21,7 +21,8 @@ type List struct {
 }
 
 func (a Alumno) ToString(alumno Alumno) string {
-	return fmt.Sprintf("%v", alumno.nombre, alumno.apellido, alumno.Fnacimiento, alumno.codigo)
+	str := fmt.Sprintf("%s-%s-%s-%s", alumno.nombre, alumno.apellido, alumno.Fnacimiento, alumno.codigo)
+	return str
 }
 
 func (l List) New() List {
@@ -77,7 +78,7 @@ func (l List) ToString(lista List) string {
 	var str string
 	current := l.head
 	for current != nil {
-		str += fmt.Sprintf("%v-", current.dato.ToString)
+		str += fmt.Sprintf("%s-", current.dato.ToString(current.dato))
 		current = current.sig
 	}
 	return str
@@ -94,13 +95,12 @@ func (l List) FrontElement(lista List) Alumno {
 func (l List) Remove(self List) int {
 	return -1 //Preguntar
 }
-func SumarValores(num int) int {
-	return num + num
+func MostrarNombre(name string) {
+	fmt.Printf("El nombre es: %s", name)
 }
-func (l List) Iterate(self List, f func(int) int) {
-	suma := 0
+func (l List) Iterate(self List, f func(string)) {
 	for self.head.sig != nil {
-		suma += f(self.head.dato.nombre)
+		f(self.head.dato.nombre)
 		self.head = self.head.sig
 	}
 }
