@@ -1,14 +1,27 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+type Alumno struct {
+	apellido, nombre, cOrigen, codigo string
+	Fnacimiento                       time.Time
+	titulo                            bool
+}
 
 type Nodo struct {
 	sig  *Nodo
-	dato int
+	dato Alumno
 }
 
 type List struct {
 	head *Nodo
+}
+
+func (a Alumno) ToString(alumno Alumno) string {
+	return fmt.Sprintf("%v", alumno.nombre, alumno.apellido, alumno.Fnacimiento, alumno.codigo)
 }
 
 func (l List) New() List {
@@ -24,20 +37,20 @@ func (l List) Next(self List) List {
 
 func (l List) IsEmpty(lista List) bool {
 	if lista.head == nil {
-		return false
-	} else {
 		return true
+	} else {
+		return false
 	}
 }
 
-func (l List) PushFront(self *List, item int) {
+func (l List) PushFront(self *List, item Alumno) {
 	var aux Nodo
 	aux.dato = item
 	aux.sig = self.head
 	self.head = &aux
 }
 
-func (l List) PushBack(self List, item int) {
+func (l List) PushBack(self List, item Alumno) {
 	if self.IsEmpty(self) {
 		self.PushFront(&self, item)
 	} else {
@@ -53,7 +66,7 @@ func (l List) PushBack(self List, item int) {
 
 func (l List) Len(lista List) int {
 	cant := 0
-	for lista.head.sig != nil {
+	for lista.head != nil {
 		cant++
 		lista.head = lista.head.sig
 	}
@@ -62,19 +75,20 @@ func (l List) Len(lista List) int {
 
 func (l List) ToString(lista List) string {
 	var str string
-	for lista.head.sig != nil {
-		str += string(lista.head.dato)
-		lista.head = lista.head.sig
+	current := l.head
+	for current != nil {
+		str += fmt.Sprintf("%v-", current.dato.ToString)
+		current = current.sig
 	}
 	return str
 }
 
-func (l List) FrontElement(lista List) int {
-	if lista.head.sig != nil {
+func (l List) FrontElement(lista List) Alumno {
+	if lista.head != nil {
 		return lista.head.dato
 	}
 	fmt.Println("Si ve este mensaje es que la lista esta vacia")
-	return -1
+	return Alumno{}
 }
 
 func (l List) Remove(self List) int {
@@ -86,13 +100,17 @@ func SumarValores(num int) int {
 func (l List) Iterate(self List, f func(int) int) {
 	suma := 0
 	for self.head.sig != nil {
-		suma += f(self.head.dato)
+		suma += f(self.head.dato.nombre)
 		self.head = self.head.sig
 	}
 }
+
 func main() {
 	var lista List
 	lista = lista.New()
-	lista.Iterate(lista, SumarValores)
+
 	fmt.Println(lista.IsEmpty(lista))
+	fmt.Println(lista.IsEmpty(lista))
+	fmt.Println(lista.ToString(lista))
+	fmt.Println(lista.Len(lista))
 }
