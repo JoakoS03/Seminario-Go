@@ -24,23 +24,16 @@ type List struct {
 	head *Nodo
 }
 
-func (a Alumno) ToString(alumno Alumno) string {
+func (alumno Alumno) ToString() string {
 	str := fmt.Sprintf("%s-%s-%s", alumno.nombre, alumno.apellido, alumno.codigo)
 	return str
 }
 
-func (l List) New() List {
+func New() List {
 	return List{}
 }
 
-func (l List) Next(self List) List {
-	if self.head != nil {
-		return self
-	}
-	return List{}
-}
-
-func (l List) IsEmpty(lista List) bool {
+func IsEmpty(lista List) bool {
 	if lista.head == nil {
 		return true
 	} else {
@@ -48,7 +41,7 @@ func (l List) IsEmpty(lista List) bool {
 	}
 }
 
-func (l List) PushFront(self *List, item Alumno) {
+func PushFront(self *List, item Alumno) {
 	var aux Nodo
 	aux.dato = item
 	aux.sig = self.head
@@ -58,7 +51,7 @@ func (l List) PushFront(self *List, item Alumno) {
 func PushBack(self List, item Alumno) *Nodo {
 	var aux Nodo
 	aux.dato = item
-	if self.IsEmpty(self) {
+	if IsEmpty(self) {
 		self.head = &aux
 		return self.head
 	} else {
@@ -71,7 +64,7 @@ func PushBack(self List, item Alumno) *Nodo {
 	}
 }
 
-func (l List) Len(lista List) int {
+func Len(lista List) int {
 	cant := 0
 	for lista.head != nil {
 		cant++
@@ -80,17 +73,17 @@ func (l List) Len(lista List) int {
 	return cant
 }
 
-func (l List) ToString(lista List) string {
+func ToString(l List) string {
 	var str string
 	current := l.head
 	for current != nil {
-		str += fmt.Sprintf("%s-", current.dato.ToString(current.dato))
+		str += fmt.Sprintf("%s-", current.dato.ToString())
 		current = current.sig
 	}
 	return str
 }
 
-func (l List) FrontElement(lista List) Alumno {
+func FrontElement(lista List) Alumno {
 	if lista.head != nil {
 		return lista.head.dato
 	}
@@ -98,18 +91,33 @@ func (l List) FrontElement(lista List) Alumno {
 	return Alumno{}
 }
 
-func (l List) Remove(self List) int {
-	return -1 //Preguntar
+func Remove(self *List, alumno Alumno) {
+	var ant *Nodo
+	actual := self.head
+
+	for actual != nil {
+		if actual.dato == alumno {
+			if ant == nil {
+				self.head = actual.sig
+			} else {
+				ant.sig = actual.sig
+			}
+			break
+		}
+		ant = actual
+		actual = actual.sig
+	}
 }
 func MostrarNombre(name string) {
 	fmt.Printf("El nombre es: %s", name)
 }
-func (l List) Iterate(self List, f func(string)) {
+
+/*func Iterate(self List, f func(string)) {
 	for self.head.sig != nil {
 		f(self.head.dato.nombre)
 		self.head = self.head.sig
 	}
-}
+}*/
 
 func InformarBariloche(lista List) {
 	for lista.head != nil {
@@ -123,7 +131,7 @@ func InformarBariloche(lista List) {
 
 func AnioMasIngresantes(list List) int {
 	anioMax := -1
-	if list.IsEmpty(list) {
+	if IsEmpty(list) {
 		return anioMax // Retorna -1 si la lista está vacía
 	}
 	cant := 0
@@ -149,7 +157,7 @@ func AnioMasIngresantes(list List) int {
 
 func CarreraConMasInscriptos(list List) string {
 	str := "Lista... vacia"
-	if list.IsEmpty(list) {
+	if IsEmpty(list) {
 		return str
 	}
 	cant := 0
@@ -173,16 +181,27 @@ func CarreraConMasInscriptos(list List) string {
 	return str
 }
 
+func EliminarIngresantes(lista *List) {
+	actual := lista.head
+	for actual != nil {
+		siguiente := actual.sig // Guardar referencia al siguiente nodo antes de modificar actual
+		if actual.dato.titulo == false {
+			Remove(lista, actual.dato)
+		}
+		actual = siguiente // Mover actual al siguiente nodo
+	}
+}
+
 func main() {
 	var lista List
-	lista = lista.New()
+	lista = New()
 	/*
 		apellido, nombre, cOrigen, codigo string
 		Fnacimiento                       time.Time
 		titulo
 	*/
-	fmt.Println(lista.IsEmpty(lista))
-	lista.PushFront(&lista, Alumno{
+	fmt.Println(IsEmpty(lista))
+	PushFront(&lista, Alumno{
 		apellido:    "sueyro",
 		nombre:      "Joaquin",
 		cOrigen:     "Berisso",
@@ -197,15 +216,33 @@ func main() {
 		cOrigen:     "Bariloche",
 		codigo:      "LS",
 		Fnacimiento: Date{day: 21, month: 9, year: 2003},
+		titulo:      false,
+	})
+
+	lista.head = PushBack(lista, Alumno{
+		apellido:    "Pepe",
+		nombre:      "Mujica",
+		cOrigen:     "Bariloche",
+		codigo:      "LS",
+		Fnacimiento: Date{day: 21, month: 9, year: 2003},
 		titulo:      true,
 	})
 
+	fmt.Println(ToString(lista))
+	fmt.Println("--------------------------------------------")
 	InformarBariloche(lista)
+	fmt.Println("--------------------------------------------")
 	fmt.Println(AnioMasIngresantes(lista))
+	fmt.Println("--------------------------------------------")
 	fmt.Println(CarreraConMasInscriptos(lista))
-	//EliminarIngresantes(lista)
+	fmt.Println("--------------------------------------------")
+	EliminarIngresantes(&lista)
+	fmt.Println("--------------------------------------------")
 
-	fmt.Println(lista.IsEmpty(lista))
-	fmt.Println(lista.ToString(lista))
-	fmt.Println(lista.Len(lista))
+	fmt.Println(IsEmpty(lista))
+	fmt.Println("--------------------------------------------")
+	fmt.Println(ToString(lista))
+	fmt.Println("--------------------------------------------")
+	fmt.Println(Len(lista))
+	fmt.Println("--------------------------------------------")
 }
