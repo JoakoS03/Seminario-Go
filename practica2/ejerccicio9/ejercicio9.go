@@ -6,9 +6,7 @@ import (
 )
 
 type Date struct {
-	day   int
-	month int
-	year  int
+	day, month, year int
 }
 
 type Alumno struct {
@@ -57,17 +55,19 @@ func (l List) PushFront(self *List, item Alumno) {
 	self.head = &aux
 }
 
-func (l List) PushBack(self List, item Alumno) {
+func PushBack(self List, item Alumno) *Nodo {
 	var aux Nodo
 	aux.dato = item
 	if self.IsEmpty(self) {
 		self.head = &aux
+		return self.head
 	} else {
 		ult := self.head
 		for ult.sig != nil {
 			ult = ult.sig
 		}
 		ult.sig = &aux
+		return ult
 	}
 }
 
@@ -148,9 +148,9 @@ func AnioMasIngresantes(list List) int {
 }
 
 func CarreraConMasInscriptos(list List) string {
-	str := ""
+	str := "Lista... vacia"
 	if list.IsEmpty(list) {
-		return str // Retorna -1 si la lista está vacía
+		return str
 	}
 	cant := 0
 	max := -1
@@ -191,7 +191,7 @@ func main() {
 		titulo:      true,
 	})
 
-	lista.PushBack(lista, Alumno{
+	lista.head = PushBack(lista, Alumno{
 		apellido:    "sueyro",
 		nombre:      "Pepe",
 		cOrigen:     "Bariloche",
