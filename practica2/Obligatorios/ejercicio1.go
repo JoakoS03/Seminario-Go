@@ -226,7 +226,8 @@ func main() {
 		Fnacimiento: Date{day: 21, month: 9, year: 2003},
 		titulo:      true,
 	})
-
+	fmt.Println(Len(lista))
+	fmt.Println("--------------------------------------------")
 	fmt.Println(ToString(lista))
 	fmt.Println("--------------------------------------------")
 	InformarBariloche(lista)
@@ -239,8 +240,6 @@ func main() {
 	fmt.Println("--------------------------------------------")
 
 	fmt.Println(IsEmpty(lista))
-	fmt.Println("--------------------------------------------")
-	fmt.Println(ToString(lista))
 	fmt.Println("--------------------------------------------")
 	fmt.Println(Len(lista))
 	fmt.Println("--------------------------------------------")
