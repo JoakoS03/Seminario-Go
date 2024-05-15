@@ -48,19 +48,18 @@ func PushFront(self *List, item Alumno) {
 	self.head = &aux
 }
 
-func PushBack(self List, item Alumno) *Nodo {
+func PushBack(self *List, item Alumno) {
 	var aux Nodo
 	aux.dato = item
-	if IsEmpty(self) {
+	if IsEmpty(*self) {
 		self.head = &aux
-		return self.head
 	} else {
 		ult := self.head
 		for ult.sig != nil {
 			ult = ult.sig
 		}
 		ult.sig = &aux
-		return ult
+
 	}
 }
 
@@ -210,7 +209,7 @@ func main() {
 		titulo:      true,
 	})
 
-	lista.head = PushBack(lista, Alumno{
+	PushBack(&lista, Alumno{
 		apellido:    "sueyro",
 		nombre:      "Pepe",
 		cOrigen:     "Bariloche",
@@ -219,7 +218,7 @@ func main() {
 		titulo:      false,
 	})
 
-	lista.head = PushBack(lista, Alumno{
+	PushBack(&lista, Alumno{
 		apellido:    "Pepe",
 		nombre:      "Mujica",
 		cOrigen:     "Bariloche",
