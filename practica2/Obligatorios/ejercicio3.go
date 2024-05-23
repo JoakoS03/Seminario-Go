@@ -10,6 +10,18 @@ type Field struct {
 
 type OptimumSlice []Field
 
+func PrintOptimumSlice(os OptimumSlice) {
+	for _, e := range os {
+		fmt.Println("Value: ", e.Value, " Cant: ", e.Cant)
+	}
+}
+
+func PrintSlice(s []int) {
+	for _, e := range s {
+		fmt.Println("Value: ", e)
+	}
+}
+
 func New(s []int) (os OptimumSlice) {
 
 	if len(s) == 0 {
@@ -33,12 +45,6 @@ func New(s []int) (os OptimumSlice) {
 	return
 }
 
-func PrintOptimumSlice(os OptimumSlice) {
-	for _, e := range os {
-		fmt.Println("Value: ", e.Value, " Cant: ", e.Cant)
-	}
-}
-
 func IsEmpty(os OptimumSlice) (ok bool) {
 	if (os[0] == Field{}) {
 		ok = true
@@ -56,10 +62,46 @@ func Len(os OptimumSlice) (cant int) {
 	return
 }
 
+func LastElement(os OptimumSlice) (lastElement Field) {
+	if IsEmpty(os) {
+		return
+	}
+	for i := range os {
+		lastElement = os[i]
+	}
+	return
+}
+
+func FrontElement(os OptimumSlice) (frontElement Field) {
+	if IsEmpty(os) {
+		return
+	}
+	frontElement = os[0]
+	return
+}
+
+func SliceArray(os OptimumSlice) (slice []int) {
+	for _, elemOs := range os {
+		for j := 0; j < elemOs.Cant; j++ {
+			slice = append(slice, elemOs.Value)
+		}
+	}
+	return
+}
+
 func main() {
 	s := []int{2, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 9, 90, 90, 90, 100}
 	os := New(s)
 	fmt.Println(IsEmpty(os))
 	fmt.Println(Len(os))
+	fe := FrontElement(os)
+	le := LastElement(os)
+	fmt.Println(fe)
+	fmt.Println(le)
+
+	sn := SliceArray(os)
+
+	fmt.Println(sn)
+	//PrintSlice(sn)
 	//PrintOptimumSlice(os)
 }
