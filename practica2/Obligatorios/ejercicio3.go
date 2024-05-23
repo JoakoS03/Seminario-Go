@@ -66,9 +66,10 @@ func LastElement(os OptimumSlice) (lastElement Field) {
 	if IsEmpty(os) {
 		return
 	}
-	for i := range os {
+	lastElement = os[len(os)-1]
+	/*for i := range os {
 		lastElement = os[i]
-	}
+	}*/
 	return
 }
 
@@ -88,20 +89,46 @@ func SliceArray(os OptimumSlice) (slice []int) {
 	}
 	return
 }
-
+func Insert(os OptimumSlice, element, pos int) (value int) {
+	field := Field{
+		Value: element,
+		Cant:  1,
+	}
+	ok := false
+	if pos >= Len(os) {
+		os = append(os, field)
+		return
+	}
+	i := 0
+	cant := 0
+	for i < len(os) && !ok {
+		cant += os[i].Cant
+		if cant == pos {
+			ok = true
+		}
+		i++
+	}
+	return
+}
 func main() {
 	s := []int{2, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 9, 90, 90, 90, 100}
 	os := New(s)
+
 	fmt.Println(IsEmpty(os))
 	fmt.Println(Len(os))
+
 	fe := FrontElement(os)
 	le := LastElement(os)
 	fmt.Println(fe)
 	fmt.Println(le)
 
 	sn := SliceArray(os)
-
 	fmt.Println(sn)
+
+	val := Insert(os, 500, 5)
+	fmt.Println(val)
+
+	fmt.Println(os)
 	//PrintSlice(sn)
 	//PrintOptimumSlice(os)
 }
