@@ -99,15 +99,7 @@ func Insert(os OptimumSlice, element, pos int) (value int) {
 		os = append(os, field)
 		return
 	}
-	i := 0
-	cant := 0
-	for i < len(os) && !ok {
-		cant += os[i].Cant
-		if cant == pos {
-			ok = true
-		}
-		i++
-	}
+	var auxSlice []Field
 	return
 }
 func main() {
