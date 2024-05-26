@@ -92,32 +92,34 @@ func SliceArray(os OptimumSlice) (slice []int) {
 func Insert(os OptimumSlice, element, position int) (newElements OptimumSlice) {
 
 	if position < 0 || position > Len(os) {
-		panic("Index out of range")
+		fmt.Println("Index out of range")
+		return
 	}
 
 	newElements = OptimumSlice{}
 	index := 0
 
-	for i, field := range os {
-		if position >= index && position <= index+field.Cant {
-			if field.Value == element {
-				// El nuevo elemento es igual al actual, simplemente incrementamos el contador
-				field.Cant++
-				os[i] = field
-			} else {
-				// Dividimos el actual en dos partes y ponemos el nuevo elemento en el medio
-				if position > index {
-					newElements = append(newElements, Field{field.Value, position - index})
-				}
+	for _, field := range os {
+		if position > index && position <= index+field.Cant {
+			if position == index+field.Cant {
+				// Lo mete al final
+				newElements = append(newElements, field)
 				newElements = append(newElements, Field{element, 1})
-				if position < index+field.Cant {
-					newElements = append(newElements, Field{field.Value, field.Cant - (position - index)})
-				}
+			} else {
+				// Corta el campo y lo mete en el medio
+				newElements = append(newElements, Field{field.Value, position - index})
+				newElements = append(newElements, Field{element, 1})
+				newElements = append(newElements, Field{field.Value, field.Cant - (position - index)})
 			}
 		} else {
 			newElements = append(newElements, field)
 		}
 		index += field.Cant
+	}
+
+	// If the position is at the very end, append the new elements
+	if position == Len(os) {
+		newElements = append(newElements, Field{element, 2})
 	}
 
 	return
@@ -137,7 +139,7 @@ func main() {
 	sn := SliceArray(os)
 	fmt.Println(sn)
 
-	os = Insert(os, 500, 5)
+	os = Insert(os, 50, 5)
 
 	fmt.Println(os)
 	//PrintSlice(sn)
