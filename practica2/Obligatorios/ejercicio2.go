@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"math/rand"
+	"strconv"
 	"time"
 )
 
@@ -31,9 +32,8 @@ type Wallet struct {
 type Blockchain []Block
 
 func crearRandom() string {
-	return string(rune(rand.Intn(100000)))
+	return strconv.Itoa(rand.Intn(100000))
 }
-
 func CreateWallet(nombre, apellido string) Wallet {
 	random := crearRandom()
 	return Wallet{Id: random, Nombre: nombre, Apellido: apellido}
@@ -113,13 +113,13 @@ func main() {
 	saldo := SaldoUsuario(user2.Id, bc)
 	fmt.Println("El saldo del usuario: ", user2.Id, " es ", saldo)
 
-	/*//Bloque 0 y 1 "Conectados"
-	fmt.Println(bc[0].Hash)
-	fmt.Println(bc[1].PreviusHash)
+	/*
+		fmt.Println(bc[0].Hash)
+		fmt.Println(bc[1].PreviusHash)
 
-	fmt.Println("---------------------------")
+		fmt.Println("---------------------------")
 
-	//Bloque 1 y 2 "Conectados"
-	fmt.Println(bc[1].Hash)
-	fmt.Println(bc[2].PreviusHash)*/
+		/*
+		fmt.Println(bc[1].Hash)
+		fmt.Println(bc[2].PreviusHash)*/
 }
