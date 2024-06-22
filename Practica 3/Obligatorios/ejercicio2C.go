@@ -31,7 +31,7 @@ func (c *Caja) atenderClientes(wg *sync.WaitGroup) {
 
 func cajaConColaMasCorta(cajas []Caja) *Caja {
 	var cajaConMenosClientes *Caja
-	minClientes := int(^uint(0) >> 1) // Inicializa con el valor máximo de int
+	minClientes := 9999999 // Inicializa con el valor máximo de int
 	for i := range cajas {
 		if len(cajas[i].clientes) < minClientes {
 			cajaConMenosClientes = &cajas[i]
@@ -50,7 +50,7 @@ func main() {
 
 	// Crear un slice de estructuras Caja
 	cajas := make([]Caja, numCajas)
-	
+
 	for i := 0; i < numCajas; i++ {
 		cajas[i] = nuevaCaja(i + 1)
 		wg.Add(1)
