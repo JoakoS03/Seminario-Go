@@ -6,12 +6,12 @@ import (
 	"time"
 )
 
-func caja(id int, clientes <-chan string, terminado chan<- int) {
+func caja(caja int, clientes <-chan string, terminado chan<- int) {
 	for cliente := range clientes {
 		tiempoAtencion := time.Duration(rand.Intn(1000)) * time.Millisecond
-		fmt.Printf("Caja %d atendiendo cliente %s\n", id, cliente)
+		fmt.Printf("Caja %d atendiendo cliente %s\n", caja, cliente)
 		time.Sleep(tiempoAtencion)
-		fmt.Printf("Caja %d terminó de atender cliente %s\n", id, cliente)
+		fmt.Printf("Caja %d terminó de atender cliente %s\n", caja, cliente)
 		terminado <- 1
 	}
 }
