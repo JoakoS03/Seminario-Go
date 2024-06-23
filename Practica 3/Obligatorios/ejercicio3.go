@@ -38,8 +38,7 @@ func (a *Agenda) AgregarContacto(contacto Contact) {
 	if a.contactos[contacto.CorreoElectronico] == (Contact{}) {
 		a.contactos[contacto.CorreoElectronico] = contacto
 	} else {
-		err := fmt.Errorf("el contacto ya existe")
-		fmt.Println("Error:", err)
+		fmt.Println("el contacto ya existe")
 	}
 }
 
