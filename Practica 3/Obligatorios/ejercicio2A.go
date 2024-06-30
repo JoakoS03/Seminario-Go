@@ -33,13 +33,11 @@ func simularAtencion(caja chan string, clientes chan string, wg *sync.WaitGroup)
 		}
 
 		// Crear un temporizador para cada cliente
-		duration := time.Duration(rand.Intn(1000)) * time.Millisecond
-		timer := time.NewTimer(duration)
+		tiempoAtencion := time.Duration(rand.Intn(1000)) * time.Millisecond
 
-		// Simular atención al cliente
-		<-timer.C // Esperar hasta que el temporizador expire
 		caja <- cli
 		fmt.Println("Cliente:", cli, " siendo atendido")
+		time.Sleep(tiempoAtencion)
 		fmt.Println("El cliente:", <-caja, " fue atendido")
 	}
 	close(caja)
