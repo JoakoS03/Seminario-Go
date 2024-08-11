@@ -31,7 +31,7 @@ func (c *Caja) atenderClientes(wg *sync.WaitGroup) {
 
 func cajaConColaMasCorta(cajas []Caja) *Caja {
 	var cajaConMenosClientes *Caja
-	minClientes := 9999999 // Inicializa con el valor máximo de int
+	minClientes := int(^uint(0) >> 1) // Inicializa con el valor máximo de int
 	for i := range cajas {
 		if len(cajas[i].clientes) < minClientes {
 			cajaConMenosClientes = &cajas[i]
